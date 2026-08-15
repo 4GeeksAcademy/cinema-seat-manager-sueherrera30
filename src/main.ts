@@ -8,5 +8,10 @@ if (typeof document !== "undefined") {
 }
 
 console.log("Hello from src/main.ts");
+const getSitStatus = (): string => {
+ return "hello testing function!";
+};
+
+console.log(getSitStatus());
 
 export {};

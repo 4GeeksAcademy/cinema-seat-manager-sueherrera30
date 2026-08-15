@@ -10,9 +10,8 @@ if (typeof document !== "undefined") {
 console.log("Hello from src/main.ts");
 const crearSalaDeCine = (filas: number, columnas: number): number[][] => {
   const salaDeCine: number[][] = [];
-  const libre = 0;
-  const ocupado = 1;
-
+  const libre: number = 0;
+  const ocupado: number = 1;
   for(let fila:number = 0; fila < filas; fila++) {
      let filaActual: number[] = [];
      for(let columna:number = 0; columna < columnas; columna++){

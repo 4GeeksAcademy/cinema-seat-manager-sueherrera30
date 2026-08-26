@@ -30,7 +30,24 @@ const reservarLugares = (sala: number[][], fila: number, asiento: number) => {
     console.log(`Error: El asiento en la fila ${fila}, asiento ${asiento} ya está ocupado.`);
   }
 };
-let sala = crearSalaDeCine(8,10);
-console.log(reservarLugares(sala, 5,4));
+
+const imprimirEstadoDeSala = (sala: number[][]) => {
+  for (let fila = 0; fila < sala.length; fila++) {
+    let estadoAsiento = ""; 
+    for (let asiento = 0; asiento < sala[fila].length; asiento++) {
+      if (sala[fila][asiento] === 0) {
+        estadoAsiento = estadoAsiento + "L"; 
+      } else {
+        estadoAsiento = estadoAsiento + "X"; 
+      }
+    }
+    console.log(sala);
+  }
+};
+
+const miSalaCine = crearSalaDeCine(8, 10);
+reservarLugares(miSalaCine, 2, 2); 
+reservarLugares(miSalaCine, 4, 4);
+imprimirEstadoDeSala(miSalaCine);
 
 export {};

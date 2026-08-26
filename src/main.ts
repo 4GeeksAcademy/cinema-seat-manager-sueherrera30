@@ -22,7 +22,15 @@ const crearSalaDeCine = (filas: number, columnas: number): number[][] => {
   return salaDeCine;
 };
 
-console.log(crearSalaDeCine(8,10));
-console.log(crearSalaDeCine(5,20));
-console.log(crearSalaDeCine(10,5));
+const reservarLugares = (sala: number[][], fila: number, asiento: number) => {
+  if (sala[fila][asiento] === 0) {
+    sala[fila][asiento] = 1;
+    console.log(`Reservaste en la fila ${fila}, asiento ${asiento}`);  
+  } else {
+    console.log(`Error: El asiento en la fila ${fila}, asiento ${asiento} ya está ocupado.`);
+  }
+};
+let sala = crearSalaDeCine(8,10);
+console.log(reservarLugares(sala, 5,4));
+
 export {};

@@ -33,21 +33,47 @@ const reservarLugares = (sala: number[][], fila: number, asiento: number) => {
 
 const imprimirEstadoDeSala = (sala: number[][]) => {
   for (let fila = 0; fila < sala.length; fila++) {
-    let estadoAsiento = ""; 
+    let estadoFila = ""; 
     for (let asiento = 0; asiento < sala[fila].length; asiento++) {
       if (sala[fila][asiento] === 0) {
-        estadoAsiento = estadoAsiento + "L"; 
+        estadoFila = estadoFila + "L"; 
       } else {
-        estadoAsiento = estadoAsiento + "X"; 
+        estadoFila = estadoFila + "X"; 
       }
     }
-    console.log(sala);
+    console.log(`Fila no. ${fila + 1}: ${estadoFila}`)  
   }
 };
 
+const conteoDeAsientos = (sala: number[][]) => {
+  let asientosReservados = 0;
+  let asientosLibres = 0; 
+  for (let fila = 0; fila < sala.length; fila++) {
+    for (let asiento = 0; asiento < sala[fila].length; asiento++) {
+      if (sala[fila][asiento] === 1) {
+        asientosReservados++; 
+      } else {
+        asientosLibres++;
+      }
+    }
+  }
+  let estadoSala = {
+    reservados: asientosReservados,
+    libres: asientosLibres
+  };
+  console.log('estadoSala', estadoSala);
+  return estadoSala;
+};
+
 const miSalaCine = crearSalaDeCine(8, 10);
+
 reservarLugares(miSalaCine, 2, 2); 
 reservarLugares(miSalaCine, 4, 4);
+reservarLugares(miSalaCine, 4, 2);
+reservarLugares(miSalaCine, 3, 10);
+reservarLugares(miSalaCine, 5, 5);
+reservarLugares(miSalaCine, 5, 6);
 imprimirEstadoDeSala(miSalaCine);
+conteoDeAsientos(miSalaCine);
 
 export {};

@@ -91,24 +91,41 @@ const renderizarSala = (sala: number[][]) => {
 
   app.innerHTML = "";
 
+  const salaVisual = document.createElement("section");
+  salaVisual.className = "rounded-2xl border border-slate-700 bg-slate-900 p-3 sm:p-5";
+
+  const pantalla = document.createElement("div");
+  pantalla.className = "mb-4 rounded-md border border-cyan-300/40 bg-cyan-100/90 py-2 text-center text-xs font-bold uppercase tracking-[0.2em] text-slate-900 shadow-[0_0_30px_rgba(125,211,252,0.35)]";
+  pantalla.textContent = "Pantalla";
+  salaVisual.appendChild(pantalla);
+
   const cabecera = document.createElement("div");
-  cabecera.className = "mb-4 flex items-center justify-between text-sm text-slate-700";
-  cabecera.innerHTML = '<span>L = libre</span><span>X = ocupado</span>';
-  app.appendChild(cabecera);
+  cabecera.className = "mb-4 flex items-center justify-between gap-2 text-xs text-slate-300";
+  cabecera.innerHTML = '<span class="whitespace-nowrap">✅ libre</span><span class="whitespace-nowrap">👤 ocupado</span>';
+  salaVisual.appendChild(cabecera);
 
   const cuadricula = document.createElement("div");
-  cuadricula.className = "grid gap-2";
-  cuadricula.style.gridTemplateColumns = `repeat(${sala[0].length}, minmax(0, 1fr))`;
+  cuadricula.className = "grid gap-2 sm:gap-3";
+  cuadricula.style.gridTemplateColumns = `repeat(${sala[0].length}, minmax(56px, 1fr))`;
 
   for (let fila = 0; fila < sala.length; fila++) {
     for (let asiento = 0; asiento < sala[fila].length; asiento++) {
       const estaLibre = sala[fila][asiento] === 0;
       const boton = document.createElement("button");
       boton.type = "button";
-      boton.textContent = estaLibre ? "L" : "X";
-      boton.className = `rounded-md px-2 py-2 text-sm font-bold text-white transition ${
-        estaLibre ? "bg-emerald-500 hover:bg-emerald-600" : "bg-slate-500"
+      boton.innerHTML = estaLibre
+        ? '<span class="text-lg leading-none">✅</span><span class="whitespace-nowrap text-[11px] font-semibold uppercase tracking-wide">Libre</span>'
+        : '<span class="text-lg leading-none">👤</span><span class="whitespace-nowrap text-[11px] font-semibold uppercase tracking-wide">Ocupado</span>';
+      boton.className = `min-w-0 rounded-xl border px-2 py-2 text-white shadow-sm transition sm:py-3 ${
+        estaLibre
+          ? "border-emerald-300/60 bg-emerald-500/90 hover:scale-[1.02] hover:bg-emerald-400"
+          : "border-slate-500/80 bg-slate-600/95"
       }`;
+      boton.style.display = "flex";
+      boton.style.flexDirection = "column";
+      boton.style.alignItems = "center";
+      boton.style.justifyContent = "center";
+      boton.style.gap = "4px";
 
       if (estaLibre) {
         boton.addEventListener("click", () => {
@@ -126,7 +143,8 @@ const renderizarSala = (sala: number[][]) => {
     }
   }
 
-  app.appendChild(cuadricula);
+  salaVisual.appendChild(cuadricula);
+  app.appendChild(salaVisual);
 };
 
 const miSalaCine = crearSalaDeCine(8, 10);

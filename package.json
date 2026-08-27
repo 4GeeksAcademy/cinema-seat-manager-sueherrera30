@@ -5,8 +5,8 @@
   "type": "module",
   "description": "Hello World with Typescript using Vite and Tailwind CSS",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
+    "start": "vite --host 0.0.0.0 --port 5173 --strictPort",
+    "dev": "vite --host 0.0.0.0 --port 5173 --strictPort",
     "console": "tsx src/main.ts",
     "typecheck": "tsc --noEmit",
     "build": "tsc -b && vite build",

@@ -80,6 +80,7 @@ const buscarAsientosJuntos = (sala: number[][]) => {
       if (sala[fila][asiento] === 0 && sala[fila][asiento + 1] === 0) {
         console.log(`Asientos juntos para ti!: Fila ${fila}, asientos ${asiento} y ${asiento + 1}`);
         return;
+      }
     }
   }
   console.log("Lo sentimos, no hay asientos juntos disponibles en la sala :(");

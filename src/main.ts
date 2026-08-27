@@ -1,11 +1,4 @@
-if (typeof document !== "undefined") {
-  import("./style.css").then(() => {
-    const app = document.querySelector<HTMLParagraphElement>("#app");
-    if (app) {
-      app.textContent = "If you can see this, Tailwind is working.";
-    }
-  });
-}
+import "./style.css";
 
 
 // funcion encargada de crear la sala de cine, la matriz que muestra filas y columnas, esta es dinamica, puedes crear la sala
@@ -86,6 +79,56 @@ const buscarAsientosJuntos = (sala: number[][]) => {
   console.log("Lo sentimos, no hay asientos juntos disponibles en la sala :(");
 };
 
+const renderizarSala = (sala: number[][]) => {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  const app = document.querySelector<HTMLDivElement>("#app");
+  if (!app) {
+    return;
+  }
+
+  app.innerHTML = "";
+
+  const cabecera = document.createElement("div");
+  cabecera.className = "mb-4 flex items-center justify-between text-sm text-slate-700";
+  cabecera.innerHTML = '<span>L = libre</span><span>X = ocupado</span>';
+  app.appendChild(cabecera);
+
+  const cuadricula = document.createElement("div");
+  cuadricula.className = "grid gap-2";
+  cuadricula.style.gridTemplateColumns = `repeat(${sala[0].length}, minmax(0, 1fr))`;
+
+  for (let fila = 0; fila < sala.length; fila++) {
+    for (let asiento = 0; asiento < sala[fila].length; asiento++) {
+      const estaLibre = sala[fila][asiento] === 0;
+      const boton = document.createElement("button");
+      boton.type = "button";
+      boton.textContent = estaLibre ? "L" : "X";
+      boton.className = `rounded-md px-2 py-2 text-sm font-bold text-white transition ${
+        estaLibre ? "bg-emerald-500 hover:bg-emerald-600" : "bg-slate-500"
+      }`;
+
+      if (estaLibre) {
+        boton.addEventListener("click", () => {
+          reservarLugares(sala, fila, asiento);
+          imprimirEstadoDeSala(sala);
+          conteoDeAsientos(sala);
+          buscarAsientosJuntos(sala);
+          renderizarSala(sala);
+        });
+      } else {
+        boton.disabled = true;
+      }
+
+      cuadricula.appendChild(boton);
+    }
+  }
+
+  app.appendChild(cuadricula);
+};
+
 const miSalaCine = crearSalaDeCine(8, 10);
 
 reservarLugares(miSalaCine, 2, 2); 
@@ -97,5 +140,6 @@ reservarLugares(miSalaCine, 5, 6);
 imprimirEstadoDeSala(miSalaCine);
 conteoDeAsientos(miSalaCine);
 buscarAsientosJuntos(miSalaCine);
+renderizarSala(miSalaCine);
 
 export {};

@@ -7,7 +7,9 @@ if (typeof document !== "undefined") {
   });
 }
 
-console.log("Hello from src/main.ts");
+
+// funcion encargada de crear la sala de cine, la matriz que muestra filas y columnas, esta es dinamica, puedes crear la sala
+// de forma dinamica con el numero que se desee de filas y columnas.
 const crearSalaDeCine = (filas: number, columnas: number): number[][] => {
   const salaDeCine: number[][] = [];
   const libre: number = 0;
@@ -21,7 +23,9 @@ const crearSalaDeCine = (filas: number, columnas: number): number[][] => {
   };
   return salaDeCine;
 };
-
+// funcion que nos permite asignar el asiento, por default en la funcion anterior, si es libre le ponemos valor de 0, pero si se ocupa
+//  se pondra aqui el valor de 1, hacemos un log donde decimos que recervamos el asiento  tal en la fila tal, si este ya tiene un valor te
+// avisa que ya esta ocupado.
 const reservarLugares = (sala: number[][], fila: number, asiento: number) => {
   if (sala[fila][asiento] === 0) {
     sala[fila][asiento] = 1;
@@ -30,7 +34,9 @@ const reservarLugares = (sala: number[][], fila: number, asiento: number) => {
     console.log(`Error: El asiento en la fila ${fila}, asiento ${asiento} ya está ocupado.`);
   }
 };
-
+// esta funcion ayuda a enseñarnos la sala con los lugares ya ocupados o no, usando 
+// L para los asientos libres, que est como 0, o x si ya esta ocupado,
+// al infinal nos muestra los valores de si esta ocupado o no, por fila.
 const imprimirEstadoDeSala = (sala: number[][]) => {
   for (let fila = 0; fila < sala.length; fila++) {
     let estadoFila = ""; 
@@ -45,6 +51,7 @@ const imprimirEstadoDeSala = (sala: number[][]) => {
   }
 };
 
+// esta funcion nos ayuda a hacer un conteo de cuantos asientos estan ocupados, y cuantos estan libres.
 const conteoDeAsientos = (sala: number[][]) => {
   let asientosReservados = 0;
   let asientosLibres = 0; 
@@ -65,6 +72,19 @@ const conteoDeAsientos = (sala: number[][]) => {
   return estadoSala;
 };
 
+//  esta funcion nos ayuda a encontrar los asientos en la misma fila que esten libres uno alado del otro, 
+// encuentra las opciones posibles, si no hay opciones manda un mensaje de que no hay disponibilidad.
+const buscarAsientosJuntos = (sala: number[][]) => {
+  for (let fila = 0; fila < sala.length; fila++) {
+    for (let asiento = 0; asiento < sala[fila].length - 1; asiento++) {
+      if (sala[fila][asiento] === 0 && sala[fila][asiento + 1] === 0) {
+        console.log(`Asientos juntos para ti!: Fila ${fila}, asientos ${asiento} y ${asiento + 1}`);
+        return;
+    }
+  }
+  console.log("Lo sentimos, no hay asientos juntos disponibles en la sala :(");
+};
+
 const miSalaCine = crearSalaDeCine(8, 10);
 
 reservarLugares(miSalaCine, 2, 2); 
@@ -75,5 +95,6 @@ reservarLugares(miSalaCine, 5, 5);
 reservarLugares(miSalaCine, 5, 6);
 imprimirEstadoDeSala(miSalaCine);
 conteoDeAsientos(miSalaCine);
+buscarAsientosJuntos(miSalaCine);
 
 export {};

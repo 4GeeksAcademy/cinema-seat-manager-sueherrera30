@@ -104,6 +104,21 @@ const renderizarSala = (sala: number[][]) => {
   cabecera.innerHTML = '<span class="whitespace-nowrap">✅ libre</span><span class="whitespace-nowrap">👤 ocupado</span>';
   salaVisual.appendChild(cabecera);
 
+  const estado = conteoDeAsientos(sala);
+  const resumen = document.createElement("div");
+  resumen.className = "mb-4 grid grid-cols-2 gap-2 text-center text-xs sm:text-sm";
+  resumen.innerHTML = `
+    <div class="rounded-lg border border-emerald-300/40 bg-emerald-500/10 p-2">
+      <p class="text-emerald-200">Libres</p>
+      <p class="text-lg font-bold text-emerald-100">${estado.libres}</p>
+    </div>
+    <div class="rounded-lg border border-rose-300/40 bg-rose-500/10 p-2">
+      <p class="text-rose-200">Ocupados</p>
+      <p class="text-lg font-bold text-rose-100">${estado.reservados}</p>
+    </div>
+  `;
+  salaVisual.appendChild(resumen);
+
   const cuadricula = document.createElement("div");
   cuadricula.className = "grid gap-2 sm:gap-3";
   cuadricula.style.gridTemplateColumns = `repeat(${sala[0].length}, minmax(56px, 1fr))`;
